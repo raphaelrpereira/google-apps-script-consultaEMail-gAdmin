@@ -141,7 +141,7 @@ function listUsersContains(nomeAluno) {
 
   do {
     page = AdminDirectory.Users.list({
-      domain: 'aluno.imepac.edu.br',
+      domain: 'subdomain.ies.edu.br',
       "query": "givenName:" + firstName,
       orderBy: 'givenName',
       maxResults: 2,
@@ -207,17 +207,18 @@ function updateEmailsDB(ra, email){
  */
 function sendMailEducacional(emailPessoal, emailEducacional, nome, campus){
     
-    var idDocAraguari = '1FEI65Qfks5FYM-vno4NYMkH8Q2Bko_p_a2kcw-nsOEA';
-    var idDocItumbara = '1QWkLch5QS7JQ31meu6l_kToelA9xO4uA52B9U9Yt2ek';
+    // pega o ID do documento Google que será utilizado como modelo para a criação de um novo (mala direta)
+    var idDocAraguari = 'idDocumentoGoogle1';
+    var idDocItumbara = 'IdDocumentoGoogle2';
     
     idDoc = (campus == 'Araguari') ? idDocAraguari : idDocItumbara;
 
     // informações do remetente e destinatario 
     var nome_completo = nome;
     var destinatario = emailPessoal;
-    var subject = "Sua conta Google IMEPAC foi criada";
-    var body = " Olá " + nome + ". \n Você está recebendo em anexo o acesso ao seu e-mail educacional. \n Este é um e-mail de disparo automático. Quaisquer dúvidas entre em contato conosco pelo e-mail suporte@imepac.edu.br.";
-    var remetente = "IMEPAC <suporte@imepac.edu.br>";
+    var subject = "Sua conta Google IES foi criada";
+    var body = " Olá " + nome + ". \n Você está recebendo em anexo o acesso ao seu e-mail educacional. \n Este é um e-mail de disparo automático. Quaisquer dúvidas entre em contato conosco pelo e-mail suporte@nomeies.edu.br.";
+    var remetente = "NOME <suporte@nomeies.edu.br>";
 
     // Cria um documento temporário, recupera o ID e o abre
     var idCopia = DriveApp.getFileById(idDoc).makeCopy('Acesso Email Institucional ' + nome).getId();
@@ -235,7 +236,7 @@ function sendMailEducacional(emailPessoal, emailEducacional, nome, campus){
     var pdf = DriveApp.getFileById(idCopia).getAs("application/pdf");
 
     // envia o email
-    MailApp.sendEmail(destinatario, subject, body, {name: remetente, attachments: pdf, bcc:'raphael.pereira@imepac.edu.br'});
+    MailApp.sendEmail(destinatario, subject, body, {name: remetente, attachments: pdf, bcc:'teste@nomeies.edu.br'});
 
     // apaga o documento temporário
     DriveApp.getFileById(idCopia).setTrashed(true);
@@ -252,10 +253,10 @@ function notificaSemEmailPessoal(emailEducacional, nome, campus){
 
     // informações do remetente e destinatario 
     var nome_completo = nome;
-    var destinatario = 'suporte@imepac.edu.br';
+    var destinatario = 'suporte@nomeies.edu.br';
     var subject = "Conta Google do aluno " + nome + " criada.";
     var body = " Entrando em contato para informar que a conta Google do aluno " + nome + " foi criada mas não foi possível enviar a notificação para o aluno. \n Motivo: E-mail pessoal não cadastrado. ";
-    var remetente = "IMEPAC <suporte@imepac.edu.br>";
+    var remetente = "NOMEIES <suporte@nomeies.edu.br>";
 
     // Cria um documento temporário, recupera o ID e o abre
     var idCopia = DriveApp.getFileById(idDoc).makeCopy('Acesso Email Institucional ' + nome).getId();
@@ -273,7 +274,7 @@ function notificaSemEmailPessoal(emailEducacional, nome, campus){
     var pdf = DriveApp.getFileById(idCopia).getAs("application/pdf");
 
     // envia o email
-    MailApp.sendEmail(destinatario, subject, body, {name: remetente, attachments: pdf, bcc:'raphael.pereira@imepac.edu.br'});
+    MailApp.sendEmail(destinatario, subject, body, {name: remetente, attachments: pdf, bcc:'test@nomeies.edu.br'});
 
     // apaga o documento temporário
     DriveApp.getFileById(idCopia).setTrashed(true);
